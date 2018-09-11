@@ -4,9 +4,16 @@ namespace Kalnoy\Nestedset;
 
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\ServiceProvider;
-
 class NestedSetServiceProvider extends ServiceProvider
 {
+    public function boot()
+    {
+        if ($this->app->runningInConsole()) {
+            $this->publishes([
+                __DIR__ . '/../config/config.php' => config_path('nestedset.php'),
+            ], 'config');
+        }
+    }
     public function register()
     {
         Blueprint::macro('nestedSet', function () {

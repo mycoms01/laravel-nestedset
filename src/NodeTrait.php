@@ -843,7 +843,7 @@ trait NodeTrait
      */
     public function getLftName()
     {
-        return NestedSet::LFT;
+        return config('nestedset.lft');
     }
 
     /**
@@ -853,7 +853,7 @@ trait NodeTrait
      */
     public function getRgtName()
     {
-        return NestedSet::RGT;
+        return config('nestedset.rgt');
     }
 
     /**
@@ -863,7 +863,7 @@ trait NodeTrait
      */
     public function getParentIdName()
     {
-        return NestedSet::PARENT_ID;
+        return config('nestedset.parrent_id');
     }
 
     /**

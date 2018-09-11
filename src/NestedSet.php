@@ -7,21 +7,6 @@ use Illuminate\Database\Schema\Blueprint;
 class NestedSet
 {
     /**
-     * The name of default lft column.
-     */
-    const LFT = '_lft';
-
-    /**
-     * The name of default rgt column.
-     */
-    const RGT = '_rgt';
-
-    /**
-     * The name of default parent id column.
-     */
-    const PARENT_ID = 'parent_id';
-
-    /**
      * Insert direction.
      */
     const BEFORE = 1;
@@ -38,9 +23,9 @@ class NestedSet
      */
     public static function columns(Blueprint $table)
     {
-        $table->unsignedInteger(self::LFT)->default(0);
-        $table->unsignedInteger(self::RGT)->default(0);
-        $table->unsignedInteger(self::PARENT_ID)->nullable();
+        $table->unsignedInteger(config('nestedset.lft'))->default(0);
+        $table->unsignedInteger(config('nestedset.rgt'))->default(0);
+        $table->unsignedInteger(config('nestedset.parrent_id'))->nullable();
 
         $table->index(static::getDefaultColumns());
     }
@@ -65,7 +50,8 @@ class NestedSet
      */
     public static function getDefaultColumns()
     {
-        return [ static::LFT, static::RGT, static::PARENT_ID ];
+
+        return [config('nestedset.lft'), config('nestedset.rgt'), config('nestedset.parrent_id')];
     }
 
     /**
@@ -77,7 +63,7 @@ class NestedSet
      */
     public static function isNode($node)
     {
-        return is_object($node) && in_array(NodeTrait::class, (array)$node);
+        return is_object($node) && in_array(NodeTrait::class, (array) $node);
     }
 
 }
