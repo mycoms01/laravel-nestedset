@@ -16,17 +16,19 @@ class Collection extends BaseCollection
      */
     public function linkNodes()
     {
-        if ($this->isEmpty()) return $this;
+        if ($this->isEmpty()) {
+            return $this;
+        }
 
         $groupedNodes = $this->groupBy($this->first()->getParentIdName());
 
         /** @var NodeTrait|Model $node */
         foreach ($this->items as $node) {
-            if ( ! $node->getParentId()) {
+            if (!$node->getParentId()) {
                 $node->setRelation('parent', null);
             }
 
-            $children = $groupedNodes->get($node->getKey(), [ ]);
+            $children = $groupedNodes->get($node->getKey(), []);
 
             /** @var Model|NodeTrait $child */
             foreach ($children as $child) {
@@ -58,12 +60,13 @@ class Collection extends BaseCollection
 
         $this->linkNodes();
 
-        $items = [ ];
+        $items = [];
 
         $root = $this->getRootNodeId($root);
 
         /** @var Model|NodeTrait $node */
         foreach ($this->items as $node) {
+
             if ($node->getParentId() == $root) {
                 $items[] = $node;
             }
@@ -114,7 +117,9 @@ class Collection extends BaseCollection
     {
         $result = new static;
 
-        if ($this->isEmpty()) return $result;
+        if ($this->isEmpty()) {
+            return $result;
+        }
 
         $groupedNodes = $this->groupBy($this->first()->getParentIdName());
 
